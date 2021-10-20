@@ -8,7 +8,7 @@ from binance.exceptions import BinanceAPIException
 
 import pandas as pd
 
-import atilgan
+from atilgan.utils import timeit
 
 
 def create_data_frame(price_data):
@@ -29,6 +29,7 @@ def create_timestamp_for_days_before(param):
     days_before += relativedelta(days=-1 * param)
     days_before_timestamp = datetime.timestamp(days_before)
     return days_before_timestamp
+
 
 class Binance(object):
     time_frame_key = {
@@ -86,7 +87,7 @@ class Binance(object):
     def get_aggregated_trades(self, parity_name):
         return self.__client.get_aggregate_trades(symbol=parity_name)
 
-    @atilgan.timeit
+    @timeit.timeit
     def get_price(self, symbol, interval_in_minutes, limit):
         price_data = self.__client.get_klines(symbol=symbol,
                                               interval=self.time_frame_key[interval_in_minutes],
@@ -94,7 +95,7 @@ class Binance(object):
 
         return create_data_frame(price_data)
 
-    @atilgan.timeit
+    @timeit.timeit
     def get_historical_price(self, symbol, interval_in_minutes, start, end=''):
         if end:
             price_data = self.__client.get_historical_klines(symbol, self.time_frame_key[interval_in_minutes], start,

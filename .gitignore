@@ -1,2 +1,4 @@
 user_api_keys.json
 .idea
+__pycache__/
+*.py[cod]

@@ -1,7 +1,7 @@
 import json
 from binance.client import Client
 
-import Binance
+from atilgan.brooker import Binance
 
 # Add more exchanges when needed
 BINANCE = 1
